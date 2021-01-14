@@ -1,0 +1,25 @@
+.DS_Store
+groupomania-front/node_modules
+groupomania-back/node_modules
+/dist
+groupomania-back/package-lock.json
+groupomania-front/package-lock.json
+
+# local env files
+groupomania-front/.env.local
+groupomania-front/.env.*.local
+
+# Log files
+groupomania-front/npm-debug.log*
+groupomania-front/yarn-debug.log*
+groupomania-front/yarn-error.log*
+groupomania-front/pnpm-debug.log*
+
+# Editor directories and files
+groupomania-front/.idea
+groupomania-front/.vscode
+groupomania-front/*.suo
+groupomania-front/*.ntvs*
+groupomania-front/*.njsproj
+groupomania-front/*.sln
+groupomania-front/*.sw?
