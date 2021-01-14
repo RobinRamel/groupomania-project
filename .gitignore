@@ -1,6 +1,6 @@
 groupomania-front/.DS_Store
-groupomania-front/node_modules
-groupomania-back/node_modules
+groupomania-front/node_modules/
+groupomania-back/node_modules/
 groupomania-front/dist
 groupomania-back/package-lock.json
 groupomania-front/package-lock.json
