@@ -4,6 +4,7 @@ const {sequelize} = require('./models')
 const cors = require('cors')
 const morgan = require('morgan')
 const config = require('./config/config')
+const routes = require('./routes')
 
 // const path = require('path');
 
@@ -21,10 +22,10 @@ app.use(bodyParser.json())
 app.use(cors())
 
 // Etant donné que ce qu'exporte routes.js est une fonction on peut directement lui passer le parametre de cette manière
-require('./routes')(app)
+app.use('', routes)
 
-
-sequelize.sync()
+// .sync({ force: true }) pour flush la BDD
+sequelize.sync({ force: true })
     .then(() => {
         app.listen(config.port);
         console.log(`Server started on port : ${config.port}`)

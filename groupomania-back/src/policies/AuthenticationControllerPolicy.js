@@ -49,7 +49,7 @@ module.exports = {
           break;
         default:
           res.status(400).json({
-            error: "Informations incorrectes"
+            error: "Quelques chose s'est mal passé..."
           })
           break;
       }

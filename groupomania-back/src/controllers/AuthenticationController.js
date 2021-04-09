@@ -1,6 +1,16 @@
 const {User} = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const config = require('../config/config')
+
+// console.log(config.authentication.jwtSecret)
+
+function jwtSignUser(user) {
+  const ONE_WEEK = 60 * 60 * 24 * 7
+  return jwt.sign(user, config.authentication.jwtSecret, {
+    expiresIn: ONE_WEEK
+  })
+}
 
 module.exports = {
 
@@ -14,9 +24,12 @@ module.exports = {
         }
 
         User.create(userCrypt)
-          .then(() => {
-            res.status(200).json({
-              message: "Utilisateur crée avec succès"
+          .then( user => {
+            console.log(user)
+            userJSON = user.toJSON()
+            res.status(200).send({
+              user: userJSON,
+              token: jwtSignUser(userJSON)
             })
           })
           .catch(error => res.status(400).json({ error: error.errors[0].message }))
@@ -28,7 +41,6 @@ module.exports = {
   login (req, res) {
     User.findOne({ where: { email: req.body.email }})
       .then(user => {
-
         if (!user) {
           res.status(401).json({ error: "Utilisateur introuvable" })
         } 
@@ -42,13 +54,11 @@ module.exports = {
               })
             }
 
+            const userJSON = user.toJSON()
+            console.log(userJSON)
             res.status(200).json({
-              userId: user.id,
-              token: jwt.sign(
-                { userId: user.id },
-                process.env.SECRET_TOKEN,
-                { expiresIn: '24h' }
-              )
+              user: userJSON,
+              token: jwtSignUser(userJSON) 
             })
           })
           .catch(error => res.status(500).json( error ))

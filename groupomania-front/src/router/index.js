@@ -3,13 +3,14 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
+import ModifyPost from '@/views/ModifyPost'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
@@ -23,6 +24,12 @@ const routes = [
     component: Login
   },
   {
+    path: '/modify-post',
+    name: 'modifyPost',
+    component: ModifyPost,
+    props: true
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -33,6 +40,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

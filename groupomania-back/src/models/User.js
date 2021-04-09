@@ -1,6 +1,6 @@
 
-module.exports = (sequelize, DataTypes) => 
-  sequelize.define('User', {
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User', {
     email: {
       type: DataTypes.STRING,
       unique: true
@@ -11,3 +11,20 @@ module.exports = (sequelize, DataTypes) =>
       unique: true
     }
   })
+
+  User.associate = function(models) {
+    User.hasMany(models.Post, {
+      foreignKey: {
+        allowNull: false
+      }
+    })
+    User.hasMany(models.Comment, {
+      foreignKey: {
+        allowNull: false
+      }
+    })
+  }
+ 
+  return User
+}
+  

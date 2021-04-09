@@ -10,6 +10,9 @@ module.exports = {
       dialect: process.env.DIALECT || 'mysql',
       host: process.env.HOST || 'localhost',
       port: '8889'
-    }
+    },
+  },
+  authentication: {
+    jwtSecret: process.env.SECRET_TOKEN
   }
 }

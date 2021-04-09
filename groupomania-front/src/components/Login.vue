@@ -17,26 +17,48 @@
       <button @click="login">
         Connexion
       </button>
+
   </div>
 </template>
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
 export default {
+  name: 'login',
+
+  beforeCreate() {
+    if (this.$store.state.isUserLoggedIn) {
+      this.$router.push({ name: "home"})
+    }
+  },
+
   data () {
     return {
      email: '',
-     password: ''
+     password: '',
+     error: null
     }
   }, 
   methods: {
     async login () {
-      console.log('buton clicked', this.email, this.password)
-      const response = await AuthenticationService.login({
-        email: this.email,
-        password: this.password
-      })
-      console.log(response.data)
+      try {
+        console.log('buton clicked', this.email, this.password)
+        // On appelle la route login avec email et password comme l'attend l'API
+        const response = await AuthenticationService.login({
+          email: this.email,
+          password: this.password
+        })
+        console.log('response : ', response.data)
+        // On update le store avec le Jwt et l'user qu'on récupere des datas de la reponse de la requete 
+        this.$store.dispatch('setToken', response.data.token)
+        this.$store.dispatch('setUser', response.data.user)
+        localStorage.setItem('gpm-token', JSON.stringify(response.data.token))
+        localStorage.setItem('gpm-user', JSON.stringify(response.data.user))
+        this.$router.push({ name: "home"})
+      } catch (error) {
+        this.error = error.response.data.error
+        console.log(error)
+      }
     }
   },
   computed: {
