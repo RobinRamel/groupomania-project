@@ -7,6 +7,7 @@ const config = require('../config/config')
 
 function jwtSignUser(user) {
   const ONE_WEEK = 60 * 60 * 24 * 7
+  console.log('user : ', user.id)
   return jwt.sign(user, config.authentication.jwtSecret, {
     expiresIn: ONE_WEEK
   })
