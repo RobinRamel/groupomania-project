@@ -10,9 +10,11 @@ module.exports = (sequelize, DataTypes) => {
   Post.associate = function(models) {
     Post.hasMany(models.Comment, {
       foreignKey: {
-        allowNull: false
-      }
-    })
+        allowNull: true
+      },
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
 
     Post.belongsTo(models.User, {
       foreignKey: {

@@ -9,6 +9,7 @@ const AuthentificationControllerPolicy = require('./policies/AuthenticationContr
 //MIDDLEWARES
 const auth = require('./middleware/auth')
 const isOwner = require('./middleware/isOwner')
+const multer = require('./middleware/multer-config')
 
   // ====== ROUTES ======= //
 
@@ -21,8 +22,8 @@ const isOwner = require('./middleware/isOwner')
   //POST RELATED
   router.get('/', PostsController.getAllPosts ),
   router.get('/:id', PostsController.getOnePost),
-  router.post('/', auth, PostsController.createPost),
-  router.put('/:id', auth, isOwner, PostsController.updatePost),
+  router.post('/', auth, multer, PostsController.createPost),
+  router.put('/:id', auth, isOwner, multer, PostsController.updatePost),
   router.delete('/:id', auth, isOwner, PostsController.deletePost),
   //COMMENT RELATED
   router.post('/comment', auth, CommentController.createComment),

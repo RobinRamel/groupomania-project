@@ -16,12 +16,16 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Post, {
       foreignKey: {
         allowNull: false
-      }
+      },
+      onDelete: 'CASCADE',
+      hooks: true
     })
     User.hasMany(models.Comment, {
       foreignKey: {
         allowNull: false
-      }
+      },
+      onDelete: 'CASCADE',
+      hooks: true
     })
   }
  

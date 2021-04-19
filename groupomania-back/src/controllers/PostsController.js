@@ -28,7 +28,7 @@ module.exports = {
     Post.create({
       title: PostObject.title,
       content: PostObject.content,
-      image: PostObject.image,
+      image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
       UserId: PostObject.userId,
       author: PostObject.author
     })
