@@ -18,16 +18,25 @@ sequelize.authenticate()
 
 const app = express()
 app.use(morgan('combined'))
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    extended: true
+  })); 
 app.use(bodyParser.json())
 app.use(cors())
 
-app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use('/images', express.static(path.join(require('path').resolve(__dirname, '..'), 'images')))
 
 // Etant donné que ce qu'exporte routes.js est une fonction on peut directement lui passer le parametre de cette manière
 app.use('', routes)
 
+
+app.use(function (err, req, res, next) {
+    console.log(err)
+    console.log('This is the invalid field ->', err.field)
+    next(err)
+  })
 // .sync({ force: true }) pour flush la BDD
-sequelize.sync({ force: true })
+sequelize.sync()
     .then(() => {
         app.listen(config.port);
         console.log(`Server started on port : ${config.port}`)

@@ -8,16 +8,16 @@ export default {
     return Api().get('');
   },
 
-  createPost(post) {
-    return Api().post('', post);
+  createPost(formData) {
+    return Api().post('', formData);
   },
 
   deletePost(postId) {
     return Api().delete(`${postId}`)
   },
 
-  updatePost(postId, post) {
-    return Api().put(`${postId}`, post)
+  updatePost(postId, formData) {
+    return Api().put(`${postId}`, formData)
   },
 
   getOnePost(postId) {

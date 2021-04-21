@@ -8,12 +8,7 @@
             label-for="post-image"
           >
             <b-img :src="image" fluid class="thePost__image"></b-img>
-            <b-form-input
-              id="post-image"
-              v-model="image"
-              type="text"
-              required
-            ></b-form-input>
+            <input type="file" @change="previewImage" accept="image/jpeg, image/jpg, image/png">
           </b-form-group>
           <b-form-group
             id="post-title-group"
@@ -68,12 +63,19 @@ export default {
       title: '',
       content: '',
       image: '',
+      newImage: null,
       error: null,
       response: null
     }
   },
   created() {
     this.getOnePost()
+  },
+  watch: {
+    newImage: function() {
+      console.log(this.newImage)
+      this.image = this.newImage.name
+    }
   },
   methods: {
     async getOnePost() {
@@ -94,16 +96,17 @@ export default {
 
     async onSubmit(event) {
       event.preventDefault()
-      console.log(event)
       console.log('this form :', this.title, this.content, this.image)
 
-      PostsService.updatePost(this.$props.postId, {
-        post: {
-          title: this.title,
-          content: this.content,
-          image: this.image
-        }
-      })
+      const formData = new FormData();
+
+      if(this.newImage !== null) {
+        formData.append('image', this.newImage)
+      }
+      formData.append('content', this.content)
+      formData.append('title', this.title)
+
+      PostsService.updatePost(this.$props.postId, formData)
       .then(response => {
         this.response = response.data.message
       })
@@ -111,6 +114,21 @@ export default {
         console.log(error)
         this.error = error
       })
+    },
+
+    previewImage(event) {
+      let input = event.target
+      let reader = new FileReader();
+
+      this.newImage = input.files[0]
+
+      console.log('input', input.files)
+
+      reader.onload = (e) => {
+        this.image = e.target.result
+      }
+
+      reader.readAsDataURL(input.files[0])
     }
   },
 }

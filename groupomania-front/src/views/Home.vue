@@ -12,14 +12,18 @@
             label-for="post-image"
         >
         
-          <b-form-input
+          <b-form-file
             id="post-image"
-            placeholder="Url de l'image..."
-            type="text"
+            :state="Boolean(post.image)"
+            placeholder="Choisissez un fichier ou déposez le ici"
             v-model="post.image"
+            drop-placeholder="Déposez ici..."
+            browse-text="upload"
             required
+            style="margin-bottom: 2rem;"
+            accept="image/jpeg, image/jpg, image/png"
           >
-          </b-form-input>
+          </b-form-file>
         </b-form-group>
         <b-form-group 
             id="title-section"
@@ -96,7 +100,7 @@ export default {
       post: {
         title: '',
         content: '',
-        image: '',
+        image: null,
       },
       error: null
     }
@@ -136,16 +140,22 @@ export default {
 
     async onSubmit(event) {
       event.preventDefault()
+      console.log(event)
+      console.log(this.post.image)
 
-      PostsService.createPost({
-        post: {
-          title: this.post.title,
-          content: this.post.content,
-          image: this.post.image,
-          userId: this.$store.state.user.id,
-          author: this.$store.state.user.username
-        }
-      })
+      const formData = new FormData();
+
+      formData.append('image' ,this.post.image)
+      formData.append('title' , this.post.title)
+      formData.append('content' , this.post.content)
+      formData.append('userId' , this.$store.state.user.id)
+      formData.append('author' , this.$store.state.user.username)
+
+      console.log('file recup : ', formData.get('file'))
+      console.log('file recup : ', formData.get('content'))
+      console.log(formData)
+
+      PostsService.createPost(formData)
       .then(response => {
         this.allPosts.unshift({
           ...response.data.post,
@@ -192,8 +202,8 @@ export default {
     }
 
 
-    textarea, input {
-      border-radius: 15px 15px 15px 15px;
+    textarea, input, #post-image {
+      border-radius: 15px 15px 15px 15px !important;
       padding-left: 1rem;
       overflow: hidden !important;
     }
