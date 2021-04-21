@@ -2,7 +2,11 @@
 node_modules/
 dist
 package-lock.json
+
+# we dont want images to be contributed
 groupomania-back/images/*
+# but we want the folder to be in repo in order to not create bugs when launched 
+!groupomania-back/images/.gitkeep
 
 # local env files
 .env.local
