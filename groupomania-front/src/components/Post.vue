@@ -13,8 +13,13 @@
       <p>
         {{ content }}
       </p>
-      <div class="post__body__buttons" v-if="this.$store.state.isUserLoggedIn && this.$store.state.user.id === this.$props.userId">
-          <b-button variant="primary" class="mr-3" :to="{ name: 'modifyPost', params: { postId: this.$props.id}}">Modifier</b-button> 
+      <div class="post__body__buttons" 
+          v-if="this.$store.state.isUserLoggedIn && (this.$store.state.user.id === this.$props.userId || this.$store.state.user.role === 'admin')"
+      >
+          <b-button variant="primary" class="mr-3" 
+            :to="{ name: 'modifyPost', params: { postId: this.$props.id}}"
+            v-if="this.$store.state.user.id === this.$props.userId"  
+          >Modifier</b-button> 
           <b-button variant="danger" @click="removePost">Supprimer</b-button>
       </div>
     </div>
@@ -100,7 +105,6 @@ export default {
   methods: {
     async onSubmit(event) {
       event.preventDefault()
-      console.log(this.form.commentInput)
 
       CommentsService.createComment({
         comment: {
@@ -111,13 +115,11 @@ export default {
         }
       })
         .then((response) => {
-          console.log('response data comment ', response.data.comment)
           this.commentList.push(response.data.comment)
           this.form.commentInput = ''
         })
         .catch((error) => {
           this.error = error
-          console.log(error)
         })
       },
 

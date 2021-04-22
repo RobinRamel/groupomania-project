@@ -29,12 +29,12 @@ app.use('/images', express.static(path.join(require('path').resolve(__dirname, '
 // Etant donné que ce qu'exporte routes.js est une fonction on peut directement lui passer le parametre de cette manière
 app.use('', routes)
 
-
-app.use(function (err, req, res, next) {
-    console.log(err)
-    console.log('This is the invalid field ->', err.field)
-    next(err)
-  })
+// A utiliser en cas d'erreur
+// app.use(function (err, req, res, next) {
+//     console.log(err)
+//     console.log('This is the invalid field ->', err.field)
+//     next(err)
+//   })
 // .sync({ force: true }) pour flush la BDD
 sequelize.sync()
     .then(() => {

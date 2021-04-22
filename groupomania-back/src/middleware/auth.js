@@ -15,35 +15,11 @@ module.exports = (req, res, next) => {
       }
 
       req.body.decodedUserId = decoded.id
-      console.log("TU PEUX PASSER LA MIFF", decoded)
       next()
     })
 
   } else {
     res.status(500).json({ error: "Accès interdit"})
   }
-
-//   try {
-//     const tokenRetrieved = req.headers.authorization.split(' ')[1];
-//     console.log('token retrieved : ',tokenRetrieved)
-//     console.log('token from Secret : ', config.authentication.jwtSecret) 
-//     console.log('token decoded : ', jwt.verify(tokenRetrieved, config.authentication.jwtSecret)) 
-//     const tokenDecoded = jwt.verify(tokenRetrieved, config.authentication.jwtSecret);
-//     // on recup l'userId qu'on a précedemment envoyer dans le payload de la method sign de JsonWebToken
-//     const userId = tokenDecoded.user.id;
-//     console.log(req.body.userId)
-//     req.body.decodedUserId = userId;
-//     console.log(userId)
-
-//     if ( req.body.userId && req.body.userId !== userId ) {
-//         throw 'User ID invalide';
-//     } else {
-//         next();
-//     }
-// } catch(error) {
-//     res.status(401).json({
-//         error: error
-//     });
-// }
 
 }

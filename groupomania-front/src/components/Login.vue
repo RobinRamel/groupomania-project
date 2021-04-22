@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login">
     <h1>Connexion</h1>
 
     <input 
@@ -14,9 +14,9 @@
       v-model="password"
       placeholder="Mot de passe" />
       <br>
-      <button @click="login">
+      <b-button variant="dark" @click="login">
         Connexion
-      </button>
+      </b-button>
 
   </div>
 </template>
@@ -42,13 +42,11 @@ export default {
   methods: {
     async login () {
       try {
-        console.log('buton clicked', this.email, this.password)
         // On appelle la route login avec email et password comme l'attend l'API
         const response = await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
-        console.log('response : ', response.data)
         // On update le store avec le Jwt et l'user qu'on récupere des datas de la reponse de la requete 
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
@@ -69,5 +67,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  .login {
+    input[type=email], input[type=password] {
+      background-color: inherit;
+      color: black;
+      border: 0px !important;
+      border-bottom: 2px solid black !important;
+      margin-bottom: 3rem;
+      font-size: 1.5rem;
+    }
 
+    h1 {
+      margin-bottom: 10rem !important;
+    }
+  }
 </style>

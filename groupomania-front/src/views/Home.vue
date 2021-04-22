@@ -108,6 +108,9 @@ export default {
   created () {
     //à la création du composant
     this.getAllPosts()
+    // if(this.allPosts.length === 0) {
+    //   this.$router.push({ name: "login"})
+    // }
   },
   methods: {
     async getAllPosts () {
@@ -121,27 +124,15 @@ export default {
         console.log(error)
        }
     },
-    // // Update la liste de commentaire avec le payload d'event et on push dans le bon object sur la data allPosts
-    // updateCommentList(payload) {
-    //   this.allPosts.forEach((object) => {
-    //     if (object.id === payload.postId) {
-    //       object.Comments.push(payload.comment)
-    //     }
-    //   })
-    // },
     
     updatePostList(payload) {
       //@TODO Refactior possible ? 
-      console.log(payload)
       const updatedPostsList = this.allPosts.filter(element => element.id !== payload.id)
-      console.log('updated list : ', updatedPostsList)
       this.allPosts = updatedPostsList
     },
 
     async onSubmit(event) {
       event.preventDefault()
-      console.log(event)
-      console.log(this.post.image)
 
       const formData = new FormData();
 
@@ -150,10 +141,6 @@ export default {
       formData.append('content' , this.post.content)
       formData.append('userId' , this.$store.state.user.id)
       formData.append('author' , this.$store.state.user.username)
-
-      console.log('file recup : ', formData.get('file'))
-      console.log('file recup : ', formData.get('content'))
-      console.log(formData)
 
       PostsService.createPost(formData)
       .then(response => {

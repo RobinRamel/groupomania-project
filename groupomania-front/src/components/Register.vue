@@ -20,9 +20,9 @@
       v-model="username"
       placeholder="Pseudo" />
       <br>
-      <button @click="register">
+      <b-button variant="dark" @click="register">
         Inscription
-      </button>
+      </b-button>
 
       <div class="errorMessage" v-html="error"></div>
   </div>
@@ -43,13 +43,11 @@ export default {
   methods: {
     async register () {
       try {
-        console.log('buuton clicked', this.email, this.password, this.username)
-      const response = await AuthenticationService.register({
+        const response = await AuthenticationService.register({
         email: this.email,
         password: this.password, 
         username: this.username
       })
-      console.log(response)
     
       // On update le store avec le Jwt et l'user qu'on récupere des datas de la reponse de la requete 
         this.$store.dispatch('setToken', response.data.token)
@@ -71,5 +69,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  .registerForm {
+    input[type=email], input[type=password], input[type=text] {
+      background-color: inherit;
+      color: black;
+      border: 0px !important;
+      border-bottom: 2px solid black !important;
+      margin-bottom: 3rem;
+      font-size: 1.5rem;
+    }
 
+    h1 {
+      margin-bottom: 10rem !important;
+    }
+  }
 </style>

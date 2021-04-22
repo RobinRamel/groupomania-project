@@ -80,10 +80,8 @@ export default {
   methods: {
     async getOnePost() {
       try {
-        console.log(this.$props.postId )
         const { data } = await PostsService.getOnePost( this.$props.postId )
         
-        console.log('One post : ', data.post)
         this.title = data.post.title
         this.content = data.post.content
         this.image = data.post.image
@@ -96,7 +94,6 @@ export default {
 
     async onSubmit(event) {
       event.preventDefault()
-      console.log('this form :', this.title, this.content, this.image)
 
       const formData = new FormData();
 
@@ -119,10 +116,7 @@ export default {
     previewImage(event) {
       let input = event.target
       let reader = new FileReader();
-
       this.newImage = input.files[0]
-
-      console.log('input', input.files)
 
       reader.onload = (e) => {
         this.image = e.target.result

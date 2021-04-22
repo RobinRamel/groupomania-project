@@ -15,11 +15,11 @@
       </b-form-input>  
       
     </div>
-    <div class="comment__right" v-if="this.$store.state.isUserLoggedIn && this.$store.state.user.id === this.$props.userId">
+    <div class="comment__right" v-if="this.$store.state.isUserLoggedIn && (this.$store.state.user.id === this.$props.userId || this.$store.state.user.role === 'admin')">
       <div class="comment__right__remove">
         <b-icon @click="removeComment" icon="x-circle" scale="2" variant="danger"></b-icon>
       </div>
-      <div class="comment__right__modify">
+      <div class="comment__right__modify" v-if="this.$store.state.user.id === this.$props.userId">
         <b-icon v-if="modification === false"  @click="modifyOn" icon="pencil-square" scale="2" variant="black"></b-icon>
         <b-icon v-if="modification === true"  @click="modifyComment" icon="check-circle-fill" scale="2" variant="success"></b-icon>
       </div>

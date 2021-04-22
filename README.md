@@ -4,38 +4,59 @@
 ```
 cd groupomania-front/
 npm install
-npm run serve
-
 
 cd groupomania-back/
 npm install
-nodemon
 ```
+
+## DB INIT ##
+Pour l'initialisation de la DB, de sa structure et d'un jeu de données de base, veuillez utiliser le fichier SQL
+- groupomania.sql
 
 ## BACK DB & INFOS 
-Make a .env in groupomania-back/ folder with : 
+Créez un fichier .env dans groupomania-back/ avec ces variables à remplacer par vos infos de connexion 
 ```
-HOST= the host 
-USERDB= user of db 
-PASSWORD= the password
-DB= the DB 
-DIALECT=mysql
-SECRET_TOKEN=the secret token u want 
+HOST=          the host 
+USERDB=        user of db 
+PASSWORD=      the password
+DB=            the DB 
+DIALECT=       mysql
+SECRET_TOKEN=  the secret token u want 
 ```
 
-## FRONT INFOS 
-go in src/services/Api.js
-an make sure we have the good Base URL for the API  
+## ON WINDOWS ##
+Pour Windows
+Dans le fichier groupomania-back/src/config/config.js
+commentez la ligne suivante : 
 ```
-import axios from 'axios'
-import store from '../store/'
+require('dotenv').config();
 
-export default () => {
-  return axios.create({
-    baseURL: `http://localhost:3000/`,  <---- there 
-    headers: {
-      'Authorization': `Bearer ${store.state.token}`
-    }
-  })
+module.exports = {
+  port: process.env.PORT || 3000,
+  db: {
+    database: process.env.DB,
+    user: process.env.USERDB,
+    password: process.env.PASSWORD,
+    options: {
+      dialect: process.env.DIALECT || 'mysql',
+      host: process.env.HOST || 'localhost',
+      //port: '8889'  <------------------------------------------ celle ci
+    },
+  },
+  authentication: {
+    jwtSecret: process.env.SECRET_TOKEN
+  }
 }
+```
+
+
+## START PROJECT ##
+Pour faire tourner le front dans : groupomania-front/
+```
+npm run serve
+```
+ 
+Pour faire tourner le back dans : groupomania-back/
+```
+nodemon
 ```

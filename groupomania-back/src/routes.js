@@ -10,6 +10,7 @@ const AuthentificationControllerPolicy = require('./policies/AuthenticationContr
 const auth = require('./middleware/auth')
 const isOwner = require('./middleware/isOwner')
 const multer = require('./middleware/multer-config')
+const isAdmin = require('./middleware/isAdmin')
 
   // ====== ROUTES ======= //
 
@@ -24,11 +25,11 @@ const multer = require('./middleware/multer-config')
   router.get('/:id', PostsController.getOnePost),
   router.post('/', auth, multer, PostsController.createPost),
   router.put('/:id', auth, isOwner, multer, PostsController.updatePost),
-  router.delete('/:id', auth, isOwner, PostsController.deletePost),
+  router.delete('/:id', auth, isAdmin, isOwner, PostsController.deletePost),
   //COMMENT RELATED
   router.post('/comment', auth, CommentController.createComment),
   router.put('/comment/:commentId', auth, isOwner, CommentController.updateComment),
-  router.delete('/comment/:commentId', auth, isOwner, CommentController.deleteComment)
+  router.delete('/comment/:commentId', auth, isAdmin, isOwner, CommentController.deleteComment)
 
 
   module.exports = router
