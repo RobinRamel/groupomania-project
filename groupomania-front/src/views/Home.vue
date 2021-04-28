@@ -141,14 +141,17 @@ export default {
       formData.append('content' , this.post.content)
       formData.append('userId' , this.$store.state.user.id)
       formData.append('author' , this.$store.state.user.username)
-
+      console.log('before : ', this.allPosts)
       PostsService.createPost(formData)
       .then(response => {
+        // To avoid error message on prop type cause response send the UserId as a string strangely 
+        let UserId = parseInt(response.data.post.UserId)
         this.allPosts.unshift({
           ...response.data.post,
+          UserId,
           Comments: []
         })
-
+        console.log('after : ', this.allPosts)
       })
       .catch(error => {
         console.log('el error : ', error)
