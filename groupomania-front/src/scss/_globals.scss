@@ -1,0 +1,97 @@
+
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px;
+  color: $C-dark;
+  //background: $C-grey;
+
+	@include breakpoint(lt-md){
+		font-size: 9px;
+	}
+	@include breakpoint(xs){
+		font-size: 7px;
+	}
+}
+
+body {
+	height: 100%;
+	display: flex;
+}
+
+#app {
+	font-size: 1.8rem;
+	height: 100%;
+}
+
+p{
+	line-height: 1.5;
+}
+
+a{
+  color: $C-main;
+	text-decoration: none;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+
+h1, h2, h3, h4, h5 {
+	font-family: 'Oswald', sans-serif;
+}
+
+
+h2 {
+	font-size: 4rem;
+	margin: 0 0 4rem 0;
+
+	@include breakpoint(lt-md) {
+		font-size: 3rem;
+		margin: 0 0 1rem 0 ;
+	}
+
+	@include breakpoint(xs) {
+		font-size: 2.5rem;
+	}
+	@include breakpoint(pano) {
+		font-size: 3.5rem;
+	}
+}
+
+h3 {
+	font-size: 3rem;
+	margin: 0 0 1.8rem 0;
+
+	@include breakpoint(lt-sm) {
+		font-size: 3rem;
+	}
+
+
+}
+
+h4 {
+	font-size: 2.5rem;
+
+	@include breakpoint(lt-md) {
+		font-size: 2.5rem;
+	}
+}
+
+h5 {
+	font-size: 2rem;
+	text-transform: uppercase;
+	margin: 2rem 0;
+
+	@include breakpoint(lt-md) {
+		margin: 1rem 0;
+		font-size: 1.7rem;
+	}
+}
+
+.main-container {
+	position: relative;
+	z-index: $ZI-containers;
+}
+

@@ -42,7 +42,7 @@ module.exports = {
     User.findOne({ where: { email: req.body.email }})
       .then(user => {
         if (!user) {
-          res.status(401).json({ error: "Utilisateur introuvable" })
+          return res.status(401).json({ error: "Utilisateur introuvable" })
         } 
 
         bcrypt.compare(req.body.password, user.password)

@@ -1,33 +1,68 @@
 <template>
-  <b-navbar toggeable="md" type="dark" variant="dark">
-    <b-navbar-brand :to="{ name: 'home'}">Groupomania</b-navbar-brand>
-
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-    <b-collapse v-if="this.$store.state.isUserLoggedIn === false" id="nav-collapse" is-nav>
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item :to="{ name: 'login'}">Login</b-nav-item>
-        <b-nav-item :to="{ name: 'register'}">Register</b-nav-item>
-      </b-navbar-nav>
-
-    </b-collapse>
-    <b-collapse v-else id="nav-collapse" is-nav>
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item :to="{ name: 'login'}">Profile</b-nav-item>
-        <b-nav-item @click="deconnection">Deconnexion</b-nav-item>
-      </b-navbar-nav>
-
-    </b-collapse>
-
-  </b-navbar>
+    <header class="header">
+      <div class="header__logo">
+        <router-link :to="{ name: 'home'}">
+          <img :src="require('@/assets/Logo150.png')" alt="logo" /> 
+        </router-link>
+      </div>
+      <div class="header__auth">
+        <div class="header__auth__register" >
+          <div class="header__auth__login__hover" @mouseenter="authHover" @mouseleave="authHoverLeave"></div>
+          <span>inscription</span>
+          <div class="circle">
+            <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 7H18V6C18 5.73478 17.8946 5.48043 17.7071 5.29289C17.5196 5.10536 17.2652 5 17 5C16.7348 5 16.4804 5.10536 16.2929 5.29289C16.1054 5.48043 16 5.73478 16 6V7H15C14.7348 7 14.4804 7.10536 14.2929 7.29289C14.1054 7.48043 14 7.73478 14 8C14 8.26522 14.1054 8.51957 14.2929 8.70711C14.4804 8.89464 14.7348 9 15 9H16V10C16 10.2652 16.1054 10.5196 16.2929 10.7071C16.4804 10.8946 16.7348 11 17 11C17.2652 11 17.5196 10.8946 17.7071 10.7071C17.8946 10.5196 18 10.2652 18 10V9H19C19.2652 9 19.5196 8.89464 19.7071 8.70711C19.8946 8.51957 20 8.26522 20 8C20 7.73478 19.8946 7.48043 19.7071 7.29289C19.5196 7.10536 19.2652 7 19 7ZM11.3 8.72C11.8336 8.25813 12.2616 7.68688 12.5549 7.04502C12.8482 6.40316 13 5.70571 13 5C13 3.67392 12.4732 2.40215 11.5355 1.46447C10.5979 0.526784 9.32608 0 8 0C6.67392 0 5.40215 0.526784 4.46447 1.46447C3.52678 2.40215 3 3.67392 3 5C2.99999 5.70571 3.1518 6.40316 3.44513 7.04502C3.73845 7.68688 4.16642 8.25813 4.7 8.72C3.30014 9.35388 2.11247 10.3775 1.27898 11.6685C0.445495 12.9596 0.00147185 14.4633 0 16C0 16.2652 0.105357 16.5196 0.292893 16.7071C0.48043 16.8946 0.734784 17 1 17C1.26522 17 1.51957 16.8946 1.70711 16.7071C1.89464 16.5196 2 16.2652 2 16C2 14.4087 2.63214 12.8826 3.75736 11.7574C4.88258 10.6321 6.4087 10 8 10C9.5913 10 11.1174 10.6321 12.2426 11.7574C13.3679 12.8826 14 14.4087 14 16C14 16.2652 14.1054 16.5196 14.2929 16.7071C14.4804 16.8946 14.7348 17 15 17C15.2652 17 15.5196 16.8946 15.7071 16.7071C15.8946 16.5196 16 16.2652 16 16C15.9985 14.4633 15.5545 12.9596 14.721 11.6685C13.8875 10.3775 12.6999 9.35388 11.3 8.72ZM8 8C7.40666 8 6.82664 7.82405 6.33329 7.49441C5.83994 7.16476 5.45542 6.69623 5.22836 6.14805C5.0013 5.59987 4.94189 4.99667 5.05764 4.41473C5.1734 3.83279 5.45912 3.29824 5.87868 2.87868C6.29824 2.45912 6.83279 2.1734 7.41473 2.05764C7.99667 1.94189 8.59987 2.0013 9.14805 2.22836C9.69623 2.45542 10.1648 2.83994 10.4944 3.33329C10.8241 3.82664 11 4.40666 11 5C11 5.79565 10.6839 6.55871 10.1213 7.12132C9.55871 7.68393 8.79565 8 8 8Z" fill="#FCA311"/>
+            </svg>            
+          </div>
+        </div>
+        <div class="header__auth__login">
+          <div class="header__auth__login__hover" @mouseover="authHover" @mouseleave="authHoverLeave"></div> 
+          <span>connexion</span>
+          <div class="circle">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 0C8.05679 0.00368884 6.15658 0.571902 4.53084 1.63543C2.9051 2.69896 1.62399 4.21189 0.843549 5.98996C0.0631123 7.76803 -0.182966 9.73448 0.135289 11.6498C0.453544 13.5651 1.3224 15.3466 2.63601 16.7773C3.57422 17.7934 4.7129 18.6044 5.9803 19.159C7.24771 19.7137 8.61635 20 10 20C11.3836 20 12.7523 19.7137 14.0197 19.159C15.2871 18.6044 16.4258 17.7934 17.364 16.7773C18.6776 15.3466 19.5465 13.5651 19.8647 11.6498C20.183 9.73448 19.9369 7.76803 19.1565 5.98996C18.376 4.21189 17.0949 2.69896 15.4692 1.63543C13.8434 0.571902 11.9432 0.00368884 10 0ZM10 18.0186C7.92452 18.0155 5.93119 17.2081 4.43944 15.7663C4.89234 14.6647 5.6628 13.7225 6.6529 13.0594C7.643 12.3963 8.80805 12.0422 10 12.0422C11.192 12.0422 12.357 12.3963 13.3471 13.0594C14.3372 13.7225 15.1077 14.6647 15.5606 15.7663C14.0688 17.2081 12.0755 18.0155 10 18.0186ZM7.99619 8.00828C7.99619 7.61231 8.11372 7.22523 8.3339 6.89599C8.55408 6.56675 8.86703 6.31014 9.23318 6.15861C9.59933 6.00707 10.0022 5.96743 10.3909 6.04468C10.7796 6.12193 11.1367 6.31261 11.4169 6.5926C11.6971 6.87259 11.888 7.22933 11.9653 7.61769C12.0426 8.00606 12.0029 8.4086 11.8513 8.77444C11.6996 9.14027 11.4428 9.45295 11.1133 9.67294C10.7837 9.89293 10.3963 10.0103 10 10.0103C9.46856 10.0103 8.95888 9.79941 8.5831 9.42395C8.20731 9.04849 7.99619 8.53926 7.99619 8.00828ZM16.9232 14.0145C16.028 12.4847 14.6502 11.2947 13.0057 10.631C13.5158 10.053 13.8482 9.34031 13.963 8.5783C14.0778 7.8163 13.97 7.03739 13.6527 6.33504C13.3354 5.6327 12.8219 5.03676 12.174 4.61874C11.5261 4.20071 10.7713 3.97836 10 3.97836C9.22875 3.97836 8.47387 4.20071 7.82596 4.61874C7.17805 5.03676 6.66464 5.6327 6.34731 6.33504C6.02999 7.03739 5.92224 7.8163 6.037 8.5783C6.15176 9.34031 6.48415 10.053 6.99429 10.631C5.34977 11.2947 3.97202 12.4847 3.07685 14.0145C2.36344 12.8003 1.9865 11.4183 1.98478 10.0103C1.98478 7.88642 2.82924 5.84948 4.33238 4.34764C5.83553 2.8458 7.87423 2.00207 10 2.00207C12.1258 2.00207 14.1645 2.8458 15.6676 4.34764C17.1708 5.84948 18.0152 7.88642 18.0152 10.0103C18.0135 11.4183 17.6366 12.8003 16.9232 14.0145Z" fill="#FCA311"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </header>
 </template>
 
 <script>
+import { gsap } from 'gsap';
+
 export default {
   name: 'Header',
+  data() {
+      return {
+        tl: gsap.timeline()
+      }
+    },
+  mounted: function() {
+    
+    
+    
+  },
   methods: {
-    deconnection() {
-      this.$store.commit('userDeconnection')
+    // deconnection() {
+    //   this.$store.commit('userDeconnection')
+    // }
+
+    authHover(event) {
+      console.log('EVENT TARGET child :' , event.relatedTarget.children[1])
+      console.log('EVENT :' , event.relatedTarget)
+    
+      // console.log('CHILDREN :' , event.target.children)
+
+      // this.tl
+      gsap.to(event.relatedTarget , { width: '150px'})
+      gsap.to(event.relatedTarget.children[1], { autoAlpha: 1})
+
+    },
+
+    authHoverLeave() {
+      console.log(this.tl)
+      this.tl.reverse();
     }
   }
   
@@ -36,5 +71,81 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
+ .header {
+   height: $header-height;
+   position: relative;
+   margin: 0 5rem $header-margin 5rem;
+   display: flex;
+   justify-content: flex-end;
+
+    &__auth {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+
+      &__login, &__register {
+        border: 2px solid currentColor;
+        overflow: hidden;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 1rem;
+        position: relative;
+        background-clip: border-box;
+        // width: 152px;
+
+        &__hover {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 10;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        .circle {
+          background-color: $C-dark;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        // svg {
+
+        // }
+
+        span {
+          position: absolute;
+          top: 50%;
+          left: 10%;
+          transform: translateY(-50%);
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+    }
+   
+
+    &__logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+    img {
+      width: 7.5rem;
+    }
+  }
+ }
 
 </style>

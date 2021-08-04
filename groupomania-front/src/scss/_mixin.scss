@@ -1,0 +1,214 @@
+@mixin IE(){
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		@content;
+	}
+}
+/*********************
+BREAKPOINTS
+xxl : desktop
+xl : desktop
+lg : laptop et plus grand
+md : tablet et plus grand
+sm : phablet et plus grand
+xs : mobile only
+*********************/
+
+
+@mixin breakpoint($point) {
+	@if $point == fullhd {
+		@media (min-width: 1920px) { @content ; }
+	}
+	@else if $point == xxl {
+		@media (min-width: 1680px) { @content ; }
+	}
+	@else if $point == xl {
+		@media (min-width: 1440px) { @content ; }
+	}
+	@else if $point == lg {
+		@media (min-width: 1280px) { @content ; }
+	}
+	@else if $point == md {
+		@media (min-width: 1024px) { @content ; }
+	}
+	@else if $point == sm {
+		@media (min-width: 768px)  { @content ; }
+	}
+	@else if $point == xs {
+		@media (max-width: 640px)  { @content ; }
+	}
+	@else if $point == lt-xl {
+		@media (max-width: 1440px)  { @content ; }
+	}
+	@else if $point == lt-lg {
+		@media (max-width: 1280px)  { @content ; }
+	}
+	@else if $point == lt-md {
+		@media (max-width: 1024px)  { @content ; }
+	}
+	@else if $point == lt-sm {
+		@media (max-width: 768px)  { @content ; }
+	}
+	@else if $point == gt-md {
+		@media (min-width: 1025px)  { @content ; }
+	}
+	@else if $point == gt-lg {
+		@media (min-width: 1281px)  { @content ; }
+	}
+	@else if $point == only-xs {
+		@media (max-width: 410px) { @content ; }
+	}
+	@else if $point == only-xsPlus {
+		@media (min-width: 410px) and (max-width: 767px) { @content ; }
+	}
+	@else if $point == only-sm {
+		@media (min-width: 768px) and (max-width: 1023px) { @content ; }
+	}
+	@else if $point == only-md {
+		@media (min-width: 1024px) and (max-width: 1279px) { @content ; }
+	}
+	@else if $point == only-lg {
+		@media (min-width: 1280px) and (max-width: 1339px) { @content ; }
+	}
+	@else if $point == only-xl {
+		@media (min-width: 1440px) and (max-width: 1679px) { @content ; }
+	}
+	@else if $point == pano {
+		@media (min-width: 1024px) and (max-height: 600px) { @content ; }
+	}
+	@else if $point == pano8 {
+		@media (min-width: 1024px) and (max-height: 800px) { @content ; }
+	}
+	@else {
+		@warn "Breakpoint mixin supports: xs, sm, md, lg, xl, xxl, lt-lg, lt-md";
+	}
+}
+
+@mixin effectUnderline(){
+	position: relative;
+	&:after {
+		display: block;
+		content: "";
+		position: absolute;
+		bottom: -2px;
+		right: 0;
+		left: 0;
+		height: 2px;
+		z-index: 1;
+		background-color: currentColor;
+		transform: scaleX(0);
+		visibility: hidden;
+		transform-origin: right;
+		transition: .6s transform cubic-bezier(0,.01,0,1),visibility 0s .6s;
+
+	}
+
+	&:hover:after {
+		transform: scaleX(1);
+		visibility: visible;
+		transform-origin: left;
+		transition: .4s transform cubic-bezier(0,.01,0,1);
+	}
+}
+
+
+@mixin center(){
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@mixin red-border($direction : left) {
+	content: "";
+	position: absolute;
+	#{$direction}: 0;
+	top: 0;
+	height: 100%;
+	width: 1px;
+	background-color: $C-primary;
+}
+
+//Gestion des gouttières centralisées======================================
+
+$gutters: ('xs': 3rem, 's': 6rem, 'sm': 8rem, 'm': 12rem, 'l': 18rem, 'xl': 24rem);
+
+@mixin gutter($selector, $size : m) {
+	@each $GutterSizeName, $GutterSize in $gutters {
+		@if $size == $GutterSizeName {
+			#{$selector}: $GutterSize;
+		}
+	}
+}
+
+//===========mixins for Padding===============
+@mixin gutterPaddingAll($size : m) {
+		@include gutter(padding, $size);
+}
+
+@mixin gutterPaddingSides($size : m) {
+		@include gutter(padding-left, $size);
+		@include gutter(padding-right, $size);
+}
+
+@mixin gutterPaddingTopBot($size : m) {
+	@include gutter(padding-top, $size);
+	@include gutter(padding-bottom, $size);
+}
+//==========END mixin for Padding===============
+
+
+//===========mixins for Margin===============
+@mixin gutterMarginAll($size : m) {
+		@include gutter(margin, $size);
+}
+
+@mixin gutterMarginSides($size : m) {
+		@include gutter(margin-left, $size);
+		@include gutter(margin-right, $size);
+}
+
+@mixin gutterMarginTopBot($size : m) {
+	@include gutter(margin-top, $size);
+	@include gutter(margin-bottom, $size);
+}
+//==========END mixin for Margin===============
+
+//===========mixins for Position===============
+@mixin gutterPositionAll($size : m) {
+		@include gutter(top, $size);
+		@include gutter(right, $size);
+		@include gutter(bottom, $size);
+		@include gutter(left, $size);
+}
+
+@mixin gutterPositionSides($size : m) {
+		@include gutter(left, $size);
+		@include gutter(right, $size);
+}
+
+@mixin gutterPositionTopBot($size : m) {
+	@include gutter(top, $size);
+	@include gutter(bottom, $size);
+}
+//==========END mixin for Position===============
+
+//END mixins gouttiere centralisées=====================================
+
+
+
+// On va faire une mixin pour le texte RTE (en gros tout ce qui vient du backend)
+@mixin rte(){
+	font-size: 2rem;
+	line-height: 1.2;
+	p{
+		margin-bottom: 2rem;
+		line-height: 1.3;
+	}
+	h2{
+		font-size: 3.5rem;
+		margin-bottom: 2rem;
+	}
+	h3{
+		font-size: 3rem;
+	}
+}

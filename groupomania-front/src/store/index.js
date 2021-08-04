@@ -27,8 +27,6 @@ export default new Vuex.Store({
       // LS = Localstorage
       const userLS = JSON.parse(localStorage.getItem('gpm-user'))
       const tokenLS = JSON.parse(localStorage.getItem('gpm-token'))
-      // console.log('userLS : ', userLS)
-      // console.log('tokenLS : ', tokenLS)
 
       if (userLS && tokenLS) {
         state.token = tokenLS

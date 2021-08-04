@@ -4,5 +4,14 @@ module.exports = {
     port: 8080,
     public: '0.0.0.0:8080'
   },
-  publicPath: "/"
+  publicPath: "/",
+  css: {
+    loaderOptions: {
+      scss: {
+        prependData: `
+          @import "@/scss/main.scss";
+        `
+      }
+    }
+  }
 }

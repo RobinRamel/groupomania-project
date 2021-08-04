@@ -1,0 +1,32 @@
+// Couleurs
+$C-dark: #011627;
+$C-medium: #75818A;
+$C-light: #C8CCD0;
+$C-white: #FFFBFF;
+
+$C-main: #FCA311;
+$C-main-light: #FFDCA4;
+
+// Font weight
+$FW-light: 300;
+$FW-normal: 400;
+$FW-medium: 500;
+$FW-semibold: 600;
+$FW-bold: 700;
+$FW-extrabold: 800;
+$FW-black: 900;
+
+// Goutierre
+$G-section: 8rem;
+$G-default: 2rem;
+$G-border-text: 3rem;
+$G-header: 1rem;
+
+// z-index
+$ZI-shapes: 0;
+$ZI-containers: 1;
+
+$header-height: 10vh;
+$header-margin: 5vh;
+$noScrollContainer: 100vh - ($header-height + $header-margin);
+

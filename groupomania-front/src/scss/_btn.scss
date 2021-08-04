@@ -1,0 +1,46 @@
+.button {
+  color: $C-main;
+  cursor: pointer;
+  padding: 0.5rem 4rem;
+  border: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+// Button de Connexion / Inscription + animation svg 
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 10rem;
+
+  .button {
+    position: relative;
+    z-index: 1;
+    padding: 1rem 7rem;
+  }
+
+  svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+
+    rect {
+      stroke: $C-main;
+      stroke-width: 4;
+      stroke-dasharray: 353, 0;
+      stroke-dashoffset: 0;
+      -webkit-transition: all 600ms ease;
+      transition: all 600ms ease;
+    }
+  }
+
+  &:hover svg rect {
+    stroke-width: 4;
+    stroke-dasharray: 196, 543;
+    stroke-dashoffset: 437;
+  }
+}

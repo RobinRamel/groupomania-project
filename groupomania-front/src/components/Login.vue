@@ -1,23 +1,37 @@
 <template>
   <div class="login">
-    <h1>Connexion</h1>
+    <div class="login__container">
 
-    <input 
-      type="email"
-      name="email"
-      v-model="email"
-      placeholder="E-mail" />
-      <br>
-    <input 
-      type="password"
-      name="password"
-      v-model="password"
-      placeholder="Mot de passe" />
-      <br>
-      <b-button variant="dark" @click="login">
-        Connexion
-      </b-button>
+      <h1>Connexion</h1>
+    
+    <div class="login__row">
+      <label for="email">E-mail</label>
+      <input 
+        type="email"
+        name="email"
+        placeholder="E-mail"
+        v-model="email" />
+    </div>
 
+    <div class="login__row">
+      <label for="password">Mot de passe</label>  
+      <input 
+        type="password"
+        name="password"
+        placeholder="Mot de passe"
+        v-model="password" />
+    </div>
+
+    <div class="btn-container">
+        <svg width="277" height="62">
+          <rect x="5" y="5" rx="25" fill="none" stroke="#FCA311" width="266" height="50"></rect>
+        </svg>
+        <span class="button" @click="login">
+          Se Connecter
+        </span>
+    </div>  
+  
+    </div>    
   </div>
 </template>
 
@@ -31,7 +45,7 @@ export default {
       this.$router.push({ name: "home"})
     }
   },
-
+ 
   data () {
     return {
      email: '',
@@ -66,19 +80,51 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped lang="scss">
   .login {
-    input[type=email], input[type=password] {
-      background-color: inherit;
-      color: black;
-      border: 0px !important;
-      border-bottom: 2px solid black !important;
-      margin-bottom: 3rem;
-      font-size: 1.5rem;
+    height: $noScrollContainer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__container {
+      width: 50%;
+      margin: 0 auto;
+      max-width: 75rem;
+      background-color: $C-dark;
+      color: $C-white;
+      padding: 5rem;
+      border: 3px solid $C-main;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: $ZI-containers;
+
+      @include breakpoint(lt-md) {
+        width: 80%;
+      }
+
+      @include breakpoint(lt-sm) {
+        width: 90%;
+      }
+
+
+
+      h1 {
+        margin-bottom: 10rem !important;
+      }
+
     }
 
-    h1 {
-      margin-bottom: 10rem !important;
-    }
+    &__row {
+        display: flex;
+        width: 80%;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+   
   }
 </style>

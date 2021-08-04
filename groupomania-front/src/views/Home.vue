@@ -1,88 +1,89 @@
 <template>
-  <b-container class="home">
-    <h1> groupomania </h1>
-    <div class="publish" v-if="this.$store.state.isUserLoggedIn">
-      <div class="publish__header py-3">
-        <h2>Mon Post</h2>
-      </div>
-      <b-form @submit="onSubmit" class="px-5 py-5">
-        <b-form-group 
-            id="image-section"
-            label="Image"
-            label-for="post-image"
-        >
-        
-          <b-form-file
-            id="post-image"
-            :state="Boolean(post.image)"
-            placeholder="Choisissez un fichier ou déposez le ici"
-            v-model="post.image"
-            drop-placeholder="Déposez ici..."
-            browse-text="upload"
-            required
-            style="margin-bottom: 2rem;"
-            accept="image/jpeg, image/jpg, image/png"
-          >
-          </b-form-file>
-        </b-form-group>
-        <b-form-group 
-            id="title-section"
-            label="Titre"
-            label-for="post-title"
-        >
-        
-          <b-form-input
-            id="post-title"
-            placeholder="Titre du post..."
-            type="text"
-            v-model="post.title"
-            required
-          >
-          </b-form-input>
-        </b-form-group>
-        <b-form-group 
-            id="content-section"
-            label="Exprimez-vous"
-            label-for="post-content"
-        >
-        
-          <b-form-textarea
-            id="post-content"
-            placeholder="Partagez à tous, en écrivant ici..."
-            type="text"
-            rows="4"
-            max-rows="15"
-            v-model="post.content"
-            required
-          >
-          </b-form-textarea>
-        </b-form-group>
-        <div class="submit-button-container">
-          <b-button type="submit" variant="dark" class="publish__button">Publier</b-button>
+  <div class="wall">
+    <div class="wall__container">
+      <div class="publish" v-if="this.$store.state.isUserLoggedIn">
+        <div class="publish__header py-3">
+          <h2>Mon Post</h2>
         </div>
-      </b-form>
-    </div>
-    <div class="wall">
-        <post 
-          @post-removed="updatePostList"
-          v-for="(post, index) in allPosts"
-          v-bind:key="index"
-          v-bind:id="post.id"
-          v-bind:title="post.title"
-          v-bind:content="post.content"
-          v-bind:image="post.image"
-          v-bind:userId="post.UserId"
-          v-bind:createdAt="post.createdAt"
-          v-bind:updatedAt="post.updatedAt"
-          v-bind:comments="post.Comments"
-          v-bind:author="post.author"
-        >
+        <b-form @submit="onSubmit" class="px-5 py-5">
+          <b-form-group 
+              id="image-section"
+              label="Image"
+              label-for="post-image"
+          >
+          
+            <b-form-file
+              id="post-image"
+              :state="Boolean(post.image)"
+              placeholder="Choisissez un fichier ou déposez le ici"
+              v-model="post.image"
+              drop-placeholder="Déposez ici..."
+              browse-text="upload"
+              required
+              style="margin-bottom: 2rem;"
+              accept="image/jpeg, image/jpg, image/png"
+            >
+            </b-form-file>
+          </b-form-group>
+          <b-form-group 
+              id="title-section"
+              label="Titre"
+              label-for="post-title"
+          >
+          
+            <b-form-input
+              id="post-title"
+              placeholder="Titre du post..."
+              type="text"
+              v-model="post.title"
+              required
+            >
+            </b-form-input>
+          </b-form-group>
+          <b-form-group 
+              id="content-section"
+              label="Exprimez-vous"
+              label-for="post-content"
+          >
+          
+            <b-form-textarea
+              id="post-content"
+              placeholder="Partagez à tous, en écrivant ici..."
+              type="text"
+              rows="4"
+              max-rows="15"
+              v-model="post.content"
+              required
+            >
+            </b-form-textarea>
+          </b-form-group>
+          <div class="submit-button-container">
+            <b-button type="submit" variant="dark" class="publish__button">Publier</b-button>
+          </div>
+        </b-form>
+      </div>
+      <div class="posts">
+          <post 
+            @post-removed="updatePostList"
+            v-for="(post, index) in allPosts"
+            v-bind:key="index"
+            v-bind:id="post.id"
+            v-bind:title="post.title"
+            v-bind:content="post.content"
+            v-bind:image="post.image"
+            v-bind:userId="post.UserId"
+            v-bind:createdAt="post.createdAt"
+            v-bind:updatedAt="post.updatedAt"
+            v-bind:comments="post.Comments"
+            v-bind:author="post.author"
+          >
 
-        </post>
-    </div>
+          </post>
+      </div>
 
-    <div class="errorMessage" v-html="error"></div>
-  </b-container>
+      <div class="errorMessage" v-html="error" v-if="this.error !== null"></div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -169,8 +170,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .publish {
-    text-align: left;
+  .wall {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: $ZI-containers;
+    
+
+    &__container {
+      max-width: clamp(600px, 60%, 1250px);
+      margin: 0 5rem;
+    }
+
+    .publish {
+      text-align: left;
     margin-bottom: 4rem;
     background-color: #B0B0B0;
     overflow: hidden;
@@ -212,5 +225,6 @@ export default {
     &__button {
       margin-left: auto;
     }
+   }
   }
 </style>
